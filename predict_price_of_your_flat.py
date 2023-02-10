@@ -4,6 +4,7 @@ from dash import html
 from dash import Input,Output
 import plotly.graph_objects as go
 import pandas as pd
+import pickle
 
 url = ('https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/dane_mieszkania_gdansk.xlsx?raw=true')
 df = pd.read_excel(url)
@@ -134,7 +135,7 @@ def display_parameters(val1, val2, val3, val4, val5):
 #####
 
 @app.callback(
-    Output('div-1', 'children'),
+    Output('div-2', 'children'),
     [Input('slider-1', 'value'),
      Input('slider-2', 'value'),
      Input('dropdown-1', 'value'),
@@ -229,10 +230,10 @@ def predict_value(val1, val2, val3, val4, val5):
         print(df_sample)
 
         price = model.predict(df_sample)[0]
-        price = round(price * 1000, 2)
+        price = int(round(price, 0))
 
         return html.Div([
-            html.H4(f'Sugerowana cena ${price}')
+            html.H4(f'Sugerowana cena {price} zł')
         ], style={'background-color': '#AF90C2', 'width': '60%', 'margin': '0 auto'})
 
 
