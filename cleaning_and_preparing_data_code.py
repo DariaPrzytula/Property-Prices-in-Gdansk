@@ -152,6 +152,10 @@ df = pd.get_dummies(df, drop_first=True)
 
 #%%
 
+df = df.drop(columns=['Price per square meter'])
+
+#%%
+
 df.to_csv('data_cleaned.csv')
 
 #%%
