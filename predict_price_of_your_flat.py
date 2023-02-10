@@ -31,9 +31,9 @@ app.layout = html.Div([
         dcc.Slider(
             id='slider-1',
             min=0,
-            max=300,
+            max=200,
             step=0.1,
-            marks={i: str(i) for i in range(0, 301, 20)},
+            marks={i: str(i) for i in range(0, 201, 20)},
             tooltip={'placement': 'bottom'}
         ),
 
@@ -42,10 +42,10 @@ app.layout = html.Div([
         html.Label('Select the year of construction of the apartment:'),
         dcc.Slider(
             id='slider-2',
-            min=1850,
+            min=1900,
             max=2030,
             step=1,
-            marks={i: str(i) for i in range(1850, 2031, 10)},
+            marks={i: str(i) for i in range(1900, 2031, 10)},
             tooltip={'placement': 'bottom'}
         ),
 
@@ -66,7 +66,7 @@ app.layout = html.Div([
         html.Div([
             dcc.Dropdown(
                 id='dropdown-2',
-                options=[{'label': i, 'value': i} for i in range(0,21,1)]
+                options=[{'label': i, 'value': i} for i in range(0,20,1)]
             )
         ], style={'width': '20%', 'textAlign': 'left'}
         ),
@@ -85,12 +85,12 @@ app.layout = html.Div([
                                                              'VII Dwór', 'Wrzeszcz', 'Wyspa Sobieszewska',
                                                              'Zaspa', 'Śródmieście', 'Żabianka']]
             )
-        ], style={'width': '20%', 'textAlign': 'left'}
+        ], style={'width': '40%', 'textAlign': 'left'}
         ),
 
         html.Hr(),
 
-    ###############
+    #########################SELECTED PARAMETERS######################################
 
         html.Div([
             html.H4('Your selected parameters:'),
