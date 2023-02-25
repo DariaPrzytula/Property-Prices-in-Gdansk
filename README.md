@@ -1,4 +1,4 @@
-## Project: Analysis of Apartment Prices in Gdansk
+## Project: Property Prices in Gdańsk, Poland
 This project is aimed at analyzing apartment prices in Gdansk, Poland. It contains several visualizations, including:
 
 Scatter plots showing the relationship between apartment price and size in different districts of Gdansk
