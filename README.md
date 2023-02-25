@@ -9,11 +9,11 @@ Additionally, the project includes a machine learning model that allows for the 
 # Requirements
 The following Python packages are required to run the code:
 
-- pandas
-- numpy
-- scikit-learn
-- plotly
-- dash
+-pandas
+-numpy
+-scikit-learn
+-plotly
+-dash
 
 # Instructions
 To run the project, clone the repository and run the app.py file. This will start a Dash application that can be accessed in a web browser.\
