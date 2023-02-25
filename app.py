@@ -1,26 +1,73 @@
+# Importowanie bibliotek
 import dash
 from dash import dcc
 from dash import html
 from dash import Input,Output
-import plotly.graph_objects as go
-import pandas as pd
+import dash_bootstrap_components as dbc
 import pickle
+import pandas as pd
+import plotly.express as px
 
-url = ('https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/dane_mieszkania_gdansk.xlsx?raw=true')
-df = pd.read_excel(url)
+# Wczytywanie danych
+
+df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\dane_uporządkowane.xlsx")
+
 
 with open('model.pickle', 'rb') as file:
     model = pickle.load(file)
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 
 app.layout = html.Div([
+    html.H1('Property prices in Gdańsk',
+            style={
+                'textAlign': 'center',
+                'color': '#7FDBFF'}
+        ),
+    html.H6('dodać opis'),
+    html.Hr(),
+    html.Div([
+        html.Label("Year built:"),
+        dcc.Slider(
+            id='year-built-slider',
+            min=1900,
+            max=2026,
+            value=2020,
+            marks={str(rok): str(rok) for rok in range(1900, 2026, 10)},
+            step=20,
+            tooltip={'placement': 'bottom'}
+        )
+    ], style={"width": "90%", "margin": "auto"}),
+
+    html.Hr(),
+
+    dcc.Tabs(id="tabs", children=[
+        dcc.Tab(label='Chart of apartment prices by area', children=[
+            html.H6('opis', style={'color' : 'red'}),
+            dcc.Graph(id='graph-1')
+        ]),
+        dcc.Tab(label='Chart of apartment price histogram', children=[
+            dcc.Graph(id='graph-2')
+        ]),
+        dcc.Tab(label='Chart of apartment prices distributed by district', children=[
+            dcc.Graph(id='graph-3')
+        ]),
+
+    ]),
+
+
+
+    ################dodaniepredykcji###
+
+
+
+    html.Hr(),
+
+html.Div([
 
     html.Div([
-        html.H2('Housing Price in Gdansk Prediction Using Machine Learning'),
-        html.H5('Random Forest Model (scikit-learn library)')
+        html.H4('Calculate the worth of your apartment'),
     ],  style={'textAlign': 'center'}),
 
     html.Hr(),
@@ -99,12 +146,14 @@ app.layout = html.Div([
             html.Hr()
         ], style={'margin': '0 auto', 'textAlign': 'center'})
 
-    ],style={'width': '80%', 'textAlign': 'left', 'margin': '0 auto', 'fontSize': 22,
-              'background-color': 'white', 'padding': '30px'})
+    ])
 
-], style={'background-color': '#61BAAE'})
+])
 
-########
+
+])
+
+
 @app.callback(
     Output('div-1', 'children'),
     [Input('slider-1', 'value'),
@@ -147,7 +196,10 @@ def display_parameters(val1, val2, val3, val4, val5):
 def predict_value(val1, val2, val3, val4, val5):
     if val1 and val2 and val3 and val4 and val5:
 
-        val5_1, val5_2, val5_3, val5_4, val5_5, val5_6, val5_7, val5_8, val5_9, val5_10, val5_11, val5_12, val5_13, val5_14, val5_15, val5_16, val5_17, val5_18, val5_19, val5_20, val5_21, val5_22, val5_23, val5_24, val5_25, val5_26, val5_27, val5_28, val5_29, val5_30 =  0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0
+        val5_1, val5_2, val5_3, val5_4, val5_5, val5_6, val5_7, val5_8, val5_9, val5_10, \
+        val5_11, val5_12, val5_13, val5_14, val5_15, val5_16, val5_17, val5_18, val5_19, \
+        val5_20, val5_21, val5_22, val5_23, val5_24, val5_25, val5_26, val5_27, val5_28, val5_29, \
+        val5_30 =  0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0,0, 0, 0, 0, 0
 
         if val5 == 'Brzeźno':
             val5_1 = 1
@@ -232,14 +284,25 @@ def predict_value(val1, val2, val3, val4, val5):
         price = model.predict(df_sample)[0]
         price = int(round(price, 0))
 
+
         return html.Div([
-            html.H4(f'Sugerowana cena {price} zł')
+            html.H4(f'Predicted price: {price} zł')
+
         ], style={'background-color': '#AF90C2', 'width': '60%', 'margin': '0 auto'})
 
 
 
+@app.callback(
+    Output('graph-1', 'figure'),
+    Output('graph-2', 'figure'),
+    Output('graph-3', 'figure'),
+    Input('year-built-slider', 'value'))
+def update_figures(selected_year):
+    filtered_df = df[df.Year == selected_year]
+    fig1 = px.scatter(filtered_df, x="Metric area", y="Price", color="District", size="Metric area")
+    fig2 = px.histogram(filtered_df, x="Price", nbins=20, range_x=[200000, 5000000])
+    fig3 = px.box(filtered_df, x='District', y='Price')
+    return fig1, fig2, fig3
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-
-
