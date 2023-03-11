@@ -1,4 +1,7 @@
-# Importowanie bibliotek
+# dodać opisy do wykresów
+
+# Import libraries
+
 import dash
 from dash import dcc
 from dash import html
@@ -7,74 +10,104 @@ import dash_bootstrap_components as dbc
 import pickle
 import pandas as pd
 import plotly.express as px
+import geopandas as gpd
 
-# Wczytywanie danych
+# Import data
 
-df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\dane_uporządkowane.xlsx")
+df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\dane_uporządkowane.xlsx")
 
+# import model
 
 with open('model.pickle', 'rb') as file:
     model = pickle.load(file)
 
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
+
+
+# dashboard code
+
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SANDSTONE])
+
 
 app.layout = html.Div([
-    html.H1('Property prices in Gdańsk',
-            style={
-                'textAlign': 'center',
-                'color': '#7FDBFF'}
-        ),
-    html.H6('dodać opis'),
-    html.Hr(),
+
     html.Div([
-        html.Label("Year built:"),
+
+    html.H1('Property prices in Gdańsk',
+            style={'textAlign': 'center',
+                   'color':'#5b3903', 'fontWeight' : 'bold'
+               }
+        ),
+
+    html.Br(),
+
+        html.Div([
+            html.P(
+                'The purpose of the project was to analyze apartment prices by collecting data on apartment sales offers from Trójmiasto.pl using the Data Miner plugin.' 
+                'The data collected included information such as price, location, area, number of rooms, year of construction, and floor level.'),
+            html.P(
+                'The data was then analyzed to identify the key features that impact apartment prices. This analysis led to the development of a predictive model that could estimate the price of an apartment based on specific parameters.'),
+            html.P(
+                'Overall, this project provided valuable insights into the real estate market and assisted in determining the market value of apartments.')
+        ], style={'background-color': 'rgba(245,245,220,0.65)', 'color':'#5b3903', 'fontWeight' : '450',
+                  'width': '90%', 'margin': 'auto', 'marginBottom': '20px'}),
+
+
+        html.Br(),
+
+    html.Div([
+        html.H5('Explore the influence of apartment construction year on selected parameters.',
+                style={'textAlign': 'center', 'marginBottom': '10px', 'color':'#5b3903', 'fontWeight' : '450'}),
+        html.Label("Select the year construction of the apartment:",
+                style={'marginBottom': '20px'}),
         dcc.Slider(
             id='year-built-slider',
             min=1900,
             max=2026,
             value=2020,
             marks={str(rok): str(rok) for rok in range(1900, 2026, 10)},
-            step=20,
-            tooltip={'placement': 'bottom'}
+            step=1,
+            tooltip={'placement': 'bottom', "always_visible": True}
+
         )
-    ], style={"width": "90%", "margin": "auto"}),
+    ], style={'background-color': 'rgba(245,245,220,0.65)', 'color':'#5b3903', 'fontWeight' : '450',
+              "width": "90%", "margin": "auto"}),
 
     html.Hr(),
 
     dcc.Tabs(id="tabs", children=[
         dcc.Tab(label='Chart of apartment prices by area', children=[
-            html.H6('opis', style={'color' : 'red'}),
-            dcc.Graph(id='graph-1')
-        ]),
+            dcc.Graph(id='graph-1', style={'backgroundColor': 'inherit', 'margin': 0})
+        ], style={'background-color': '#fcfce9'}),
         dcc.Tab(label='Chart of apartment price histogram', children=[
-            dcc.Graph(id='graph-2')
-        ]),
+            dcc.Graph(id='graph-2', style={'backgroundColor': 'inherit', 'margin': 0})
+        ], style={'background-color': '#f1f1d0'}),
         dcc.Tab(label='Chart of apartment prices distributed by district', children=[
-            dcc.Graph(id='graph-3')
-        ]),
+            dcc.Graph(id='graph-3', style={'backgroundColor': 'inherit', 'margin': 0})
+        ], style={'background-color': '#dfdfab'}),
 
-    ]),
-
-
-
-    ################dodaniepredykcji###
+    ])
 
 
+], style={'background-image': 'url(https://images.unsplash.com/photo-1623130622557-8fab31968b8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2RhbnNrfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60)',
+          'background-size': 'cover',
+          'background-position': 'top center',
+          'background-repeat': 'no-repeat'}),
 
-    html.Hr(),
+################ MACHINE LEARNING PART ###################
 
 html.Div([
 
     html.Div([
-        html.H4('Calculate the worth of your apartment'),
-    ],  style={'textAlign': 'center'}),
+        html.H3('Calculate the worth of your apartment'),
+    ],  style={'textAlign': 'center', 'color':'#5b3903', 'fontWeight' : 'bold'}),
 
     html.Hr(),
 
     html.Div([
 
-    html.Label('Select the size of the apartment:'),
+    html.Label('Select the size of the apartment:',
+               style={'textAlign': 'left', 'color':'#5b3903', 'fontWeight' : '450', 'marginBottom': '20px'}),
         dcc.Slider(
             id='slider-1',
             min=0,
@@ -86,7 +119,8 @@ html.Div([
 
         html.Hr(),
 
-        html.Label('Select the year of construction of the apartment:'),
+        html.Label('Select the year construction of the apartment:',
+                   style={'textAlign': 'left', 'color':'#5b3903', 'fontWeight' : '450', 'marginBottom': '20px'}),
         dcc.Slider(
             id='slider-2',
             min=1900,
@@ -94,33 +128,39 @@ html.Div([
             step=1,
             marks={i: str(i) for i in range(1900, 2031, 10)},
             tooltip={'placement': 'bottom'}
+
         ),
 
         html.Hr(),
 
-        html.Label('Select the number of rooms:'),
+        html.Label('Select the number of rooms:',
+                   style={'textAlign': 'left', 'color':'#5b3903', 'fontWeight' : '450', 'marginBottom': '20px'}),
         html.Div([
             dcc.Dropdown(
                 id='dropdown-1',
-                options=[{'label': i, 'value': i} for i in range(1,21,1)]
+                options=[{'label': i, 'value': i} for i in range(1,21,1)],
+                style={'backgroundColor': '#dfdfab', 'color':'#5b3903'}
             )
         ], style={'width': '20%', 'textAlign': 'left'}
         ),
 
         html.Hr(),
 
-        html.Label('Select the floor:'),
+        html.Label('Select the floor:',
+                   style={'textAlign': 'left', 'color':'#5b3903', 'fontWeight' : '450', 'marginBottom': '20px'}),
         html.Div([
             dcc.Dropdown(
                 id='dropdown-2',
-                options=[{'label': i, 'value': i} for i in range(0,20,1)]
+                options=[{'label': i, 'value': i} for i in range(0,20,1)],
+                style={'backgroundColor': '#dfdfab', 'color':'#5b3903'}
             )
         ], style={'width': '20%', 'textAlign': 'left'}
         ),
 
         html.Hr(),
 
-        html.Label('Select the district:'),
+        html.Label('Select the district:',
+                   style={'textAlign': 'left', 'color':'#5b3903', 'fontWeight' : '450', 'marginBottom': '20px'}),
         html.Div([
             dcc.Dropdown(
                 id='dropdown-3',
@@ -130,28 +170,25 @@ html.Div([
                                                              'Przeróbka', 'Przymorze', 'Rudniki', 'Siedlce',
                                                              'Stogi', 'Strzyża', 'Suchanino', 'Ujeścisko-Łostowice',
                                                              'VII Dwór', 'Wrzeszcz', 'Wyspa Sobieszewska',
-                                                             'Zaspa', 'Śródmieście', 'Żabianka']]
+                                                             'Zaspa', 'Śródmieście', 'Żabianka']],
+                style={'backgroundColor': '#dfdfab', 'color':'#5b3903'}
             )
         ], style={'width': '40%', 'textAlign': 'left'}
         ),
 
         html.Hr(),
 
-    #########################SELECTED PARAMETERS######################################
-
         html.Div([
             html.H4('Your selected parameters:'),
             html.Div(id='div-1'),
             html.Div(id='div-2'),
             html.Hr()
-        ], style={'margin': '0 auto', 'textAlign': 'center'})
+        ], style={'margin': '0 auto', 'textAlign': 'left', 'color':'#5b3903', 'fontWeight' : '450'})
 
     ])
 
 ])
-
-
-])
+], style={'background':'beige'})
 
 
 @app.callback(
@@ -179,7 +216,6 @@ def display_parameters(val1, val2, val3, val4, val5):
         return html.Div([
             html.H6('Select all parameters!')
         ])
-
 
 #####
 
@@ -286,10 +322,9 @@ def predict_value(val1, val2, val3, val4, val5):
 
 
         return html.Div([
-            html.H4(f'Predicted price: {price} zł')
+            html.H4(f'The estimated value of your apartment: {price} zł', style= {'color':'#5b3903'})
 
-        ], style={'background-color': '#AF90C2', 'width': '60%', 'margin': '0 auto'})
-
+        ], style={'background-color': '#edebe4', 'width': '60%', 'margin': '0 auto'})
 
 
 @app.callback(
@@ -299,9 +334,23 @@ def predict_value(val1, val2, val3, val4, val5):
     Input('year-built-slider', 'value'))
 def update_figures(selected_year):
     filtered_df = df[df.Year == selected_year]
+
     fig1 = px.scatter(filtered_df, x="Metric area", y="Price", color="District", size="Metric area")
+    fig1.update_layout(xaxis_title="Metric area",
+                       yaxis_title="Price",
+                       font=dict(color="color':'#5b3903"),
+                       plot_bgcolor="beige"
+                       )
+    fig1.update_xaxes(showgrid=True, gridcolor='white', zeroline=False)
+    fig1.update_yaxes(showgrid=True, gridcolor='white', zeroline=False)
+
     fig2 = px.histogram(filtered_df, x="Price", nbins=20, range_x=[200000, 5000000])
+    fig2.update_layout(bargap=0.2
+                       )
+
     fig3 = px.box(filtered_df, x='District', y='Price')
+
+
     return fig1, fig2, fig3
 
 if __name__ == '__main__':
