@@ -16,7 +16,16 @@ The following Python packages are required to run the code:
 -dash
 
 # Instructions
-To run the project, clone the repository and run the app.py file. This will start a Dash application that can be accessed in a web browser.\
+The repository contains files such as:
+* raw_data.xlsx - file with source data
+* data_to_dashboard.xlsx - a file with cleaned data used for the dashboard
+* data_to_model.csv - file with data prepared for the model
+* cleaning_and_preparing_code.py - a file containing code for cleaning and preparing data
+* app.py - file containing the dashboard code
+
+To open the Dash application, you need to download all the files and ...
+This will launch the Dash app which can be accessed in your web browser.
+The application enables interactive exploration of data on housing prices, as well as prediction of housing prices based on data entered by the user. This will start a Dash application that can be accessed in a web browser.\
 The application allows for interactive exploration of the apartment price data, as well as prediction of apartment prices based on user input.
 
 # Data
