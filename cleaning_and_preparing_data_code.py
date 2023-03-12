@@ -3,8 +3,8 @@ import numpy as np
 
 np.random.seed(10)
 #%%
-url = ('https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/dane_mieszkania_gdansk.xlsx?raw=true')
-df = pd.read_excel(url)
+
+df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\raw_data.xlsx")
 
 #%%
 
@@ -148,15 +148,19 @@ df['Price'] = df['Price'].replace({' ':'', ',':''}, regex=True).astype('int64')
 df = df.loc[(df['Price'] < 6000000)]
 #%%
 
-df = pd.get_dummies(df, drop_first=True)
-
-#%%
-
 df = df.drop(columns=['Price per square meter'])
 
 #%%
 
-df.to_csv('data_cleaned.csv')
+df.to_excel('data_to_dashboard.xlsx')
+
+#%%
+
+df = pd.get_dummies(df, drop_first=True)
+
+#%%
+
+df.to_csv('data_to_model.csv')
 
 #%%
 
@@ -182,8 +186,8 @@ reg_score = reg.score(X_test,y_test)
 
 from sklearn.model_selection import GridSearchCV
 
-param_grid = [{'max_depth' : [3, 4, 5, 6, 7, 8, 10, 20],
-               'min_samples_leaf': [3, 4, 5, 10, 15]}]
+param_grid = [{'max_depth' : [1,2,3, 4, 5, 6, 7, 8, 10, 15, 18, 20],
+               'min_samples_leaf': [3, 4, 5, 8, 10, 12, 14, 15, 17]}]
 
 model = RandomForestRegressor() 
 gs = GridSearchCV(model, param_grid=param_grid, scoring = 'r2')

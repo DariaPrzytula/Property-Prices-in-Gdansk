@@ -14,7 +14,7 @@ import geopandas as gpd
 
 # Import data
 
-df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\dane_uporządkowane.xlsx")
+df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\data_to_dashboard.xlsx")
 
 # import model
 
@@ -41,15 +41,15 @@ app.layout = html.Div([
 
     html.Div([
             html.P(
-                'The purpose of the project was to analyze apartment prices by collecting data on apartment sales offers from Trójmiasto.pl using the Data Miner plugin (3000 offers).' 
-                'The data collected included information such as price, location, area, number of rooms, year of construction, and floor level.'),
+                'The purpose of the project was to analyze apartment prices by collecting data on apartment sales offersfrom Trójmiasto.pl using the Data Miner plugin.' 
+                'The collected data (3000 offers) included information such as price, location, area, number of rooms, year of construction, and floor level.'),
             html.P(
-                'The data was then analyzed to identify the key features that impact apartment prices. '
+                'The data was analyzed to identify the key features that impact apartment prices. '
                 'This analysis led to the development of a predictive model that could estimate the price of an apartment based on specific parameters.'),
             html.P(
                 'Overall, this project provided valuable insights into the real estate market and assisted in determining the market value of apartments.')
         ], style={'background-color': 'rgba(245,245,220,0.75)', 'color':'#5b3903', 'fontWeight' : '450',
-                  'width': '90%', 'margin': 'auto', 'marginBottom': '20px'}),
+                  'width': '80%', 'margin': 'auto', 'marginBottom': '20px'}),
 
     html.Br(),
 
@@ -70,7 +70,7 @@ app.layout = html.Div([
             tooltip={'placement': 'bottom', "always_visible": True}
                     )
     ], style={'background-color': 'rgba(245,245,220,0.75)', 'color':'#5b3903', 'fontWeight' : '450',
-              "width": "90%", "margin": "auto"}),
+              "width": "80%", "margin": "auto"}),
 
     ], style={'background-image': 'url(https://images.unsplash.com/photo-1623130622557-8fab31968b8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2RhbnNrfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60)',
           'background-size': 'cover',
@@ -98,7 +98,7 @@ app.layout = html.Div([
         ], style={'background-color': '#f1f1d0'}),
         dcc.Tab(label='Chart of apartment prices distributed by district', children=[
             html.Br(),
-            html.P('A box plot showing the distribution of prices across different districts. '
+            html.P('A box plot shows the distribution of prices across different districts. '
                    'The x-axis represents the districts while the y-axis represents the prices. '
                    'The boxes show the interquartile range of the data while the whiskers extend '
                    'to the minimum and maximum values that are not considered outliers. '
