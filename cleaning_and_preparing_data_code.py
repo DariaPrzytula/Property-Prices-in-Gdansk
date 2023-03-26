@@ -1,20 +1,24 @@
 import pandas as pd
 import numpy as np
 
-np.random.seed(10)
-#%%
+#%% 
+
+# Import data
+
 url="https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/raw_data.xlsx?raw=true"
 df = pd.read_excel(url)
 
-#%%
+#%% 
+
+# Organize data in the "Price" column
+
+df['Price'] = df['Price'].str.replace('zł', '')
+
+#%% 
+
+# Organize data in the "District" column
 
 df['District'] = df['District'].str.split(',').str[0]
-df['Price'] = df['Price'].str.replace('zł', '')
-df['Price per square meter'] = df['Price per square meter'].str.replace('zł/m2', '')
-
-#%%
-
-#uporządkowanie nazw z kolumny "Dzielnica"
 
 df.replace("Gdańsk Orunia Górna", "Orunia", inplace=True)
 df.replace("Gdańsk Morena ", "Piecki-Migowo", inplace=True)
@@ -112,71 +116,87 @@ df.replace("Gdańsk Osowa", "Osowa", inplace=True)
 df.replace("Gdańsk  Chełm ", "Chełm", inplace=True)
 df.replace("Gdańsk Przymorze", "Przymorze", inplace=True)
 
-#%%
+#%% 
 
-#uporządkowanie danych z kolumny "Piętro"
+# Organize data in the "Floor" column - part1
+
 df.replace("2009", np.nan, inplace=True)
 df.replace("2019", np.nan, inplace=True)
 df.replace("2017", np.nan, inplace=True)
 df.replace("2022", np.nan, inplace=True)
 
-#%%
+#%% 
 
-#usunięcie braków
+# Drop missing values and unused columns
+
 df= df.dropna()
+df = df.drop(columns=['Price per square meter'])
 
 #%%
 
-# zamiana parter na 0 i typ int
+# Organize data in the "Floor" column - part2
+df.replace("parter", "0", inplace=True)
+df["Floor"] = df["Floor"].astype("int64")
+df["Floor"] = df["Floor"] + 1
+
+#%% 
+
+# Organize data in the "Floor" column
 
 df.replace("parter", "0", inplace=True)
 df["Floor"] = df["Floor"].astype("int64")
 df["Floor"] = df["Floor"] + 1
 
-
-#%%
+#%% 
 
 # Change types of data
+
 df['Year'].fillna(0, inplace=True)
 df['Year'] = df['Year'].astype('int64')
-df['Price per square meter'] = df['Price per square meter'].astype('int64')
 
-#%%
+#%% 
 
-# Uporzadkowanie cen. zmiana przecinkow, kropek itp POPRAWIĆ !!! PRZECINKI SĄ GROSZAMI
+# Organize data in the "Price" column
 
 df['Price'] = df['Price'].replace({' ':'', ',':''}, regex=True).astype('int64')
 df = df.loc[(df['Price'] < 6000000)]
-#%%
 
-df = df.drop(columns=['Price per square meter'])
+#%% 
 
-#%%
+# Save data to dashboard
 
 df.to_excel('data_to_dashboard.xlsx')
 
-#%%
+#%% 
+
+# Convert categorical variable into variables
 
 df = pd.get_dummies(df, drop_first=True)
 
+#%% 
 
-#%%
+# Save data to model 
 
 df.to_csv('data_to_model.csv')
 
-#%%
+#%% 
+
+# Prepare data to model
 
 X = df.copy()
 y = X.pop('Price')
 
-#%%
+#%% 
+
+# Split a dataset into a training set and a test set
 
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
+#%% 
 
-#%%
+# Model 
 
 from sklearn.linear_model import LinearRegression
 
@@ -186,19 +206,9 @@ model.fit(X_test, y_test)
 
 model_score = model.score(X_test, y_test)
 
-
-
-#%%
-
-
-
-#%%
-
-
 #%% 
 
-
-#%%
+# Save model
 
 import pickle
 
