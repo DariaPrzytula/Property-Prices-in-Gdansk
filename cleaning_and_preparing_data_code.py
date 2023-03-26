@@ -160,6 +160,14 @@ df = pd.get_dummies(df, drop_first=True)
 
 #%%
 
+#from sklearn.preprocessing import StandardScaler
+
+#scaler = StandardScaler()
+
+#df[['Price', 'Metric area', 'Year', 'Rooms', 'Floor']] = scaler.fit_transform(df[['Price', 'Metric area', 'Year', 'Rooms', 'Floor']])
+
+#%%
+
 df.to_csv('data_to_model.csv')
 
 #%%
@@ -173,33 +181,28 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-#%%
-
-from sklearn.ensemble import RandomForestRegressor
-
-reg = RandomForestRegressor()
-reg.fit(X_train, y_train)
-
-reg_score = reg.score(X_test,y_test)
 
 #%%
 
-from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LinearRegression
 
-param_grid = [{'max_depth' : [1,2,3, 4, 5, 6, 7, 8, 10, 15, 18, 20],
-               'min_samples_leaf': [3, 4, 5, 8, 10, 12, 14, 15, 17]}]
+model = LinearRegression()
 
-model = RandomForestRegressor() 
-gs = GridSearchCV(model, param_grid=param_grid, scoring = 'r2')
-gs.fit(X_train, y_train)
+model.fit(X_test, y_test)
+
+model_score = model.score(X_test, y_test)
+
+
 
 #%%
 
-gs_score = gs.score(X_test, y_test)
+
+
+#%%
+
 
 #%% 
 
-model = gs.best_estimator_
 
 #%%
 

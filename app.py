@@ -163,12 +163,12 @@ html.Div([
 
     html.Hr(style={'border': '1px solid #6b3e00'}),
 
-        html.Label('Floor:',
+        html.Label('Floor (1 is a ground floor) :',
                    style={'textAlign': 'left', 'color':'#5b3903', 'fontWeight' : '450', 'marginBottom': '20px'}),
         html.Div([
             dcc.Dropdown(
                 id='dropdown-2',
-                options=[{'label': i, 'value': i} for i in range(0,20,1)],
+                options=[{'label': i, 'value': i} for i in range(1,20,1)],
                 style={'backgroundColor': '#dfdfab', 'color':'#5b3903'}
             )
         ], style={'width': '20%', 'textAlign': 'left'}
