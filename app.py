@@ -1,5 +1,3 @@
-# dodać opisy do wykresów
-
 # Import libraries
 
 import dash
@@ -11,13 +9,13 @@ import urllib.request
 import pickle
 import pandas as pd
 import plotly.express as px
-import geopandas as gpd
 
 # Import data
+
 url = "https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/data_to_dashboard.xlsx?raw=true"
 df = pd.read_excel(url)
 
-# import model
+# Import model
 
 url2 = 'https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/model.pickle?raw=true'
 
@@ -25,7 +23,6 @@ with urllib.request.urlopen(url2) as file:
     model = pickle.load(file)
 
 
-# dashboard code
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SANDSTONE])
 
@@ -56,7 +53,7 @@ app.layout = html.Div([
 
     html.Br(),
 
-# Section II - Analysis in charts
+# Section II - Data visualization with charts and graphs
 
     html.Div([
         html.H5('Explore the influence of apartment construction year on selected parameters.',
@@ -113,7 +110,7 @@ app.layout = html.Div([
 
     html.Hr(style={'border': '2px solid #6b3e00'}),
 
-#Section III - calculator
+#Section III - Calculator
 
 html.Div([
 
