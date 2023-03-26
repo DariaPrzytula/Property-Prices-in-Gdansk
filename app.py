@@ -56,7 +56,7 @@ app.layout = html.Div([
 # Section II - Data visualization with charts and graphs
 
     html.Div([
-        html.H5('Explore the influence of apartment construction year on selected parameters.',
+        html.H5('Explore the influence of apartment construction year on other parameters.',
                 style={'textAlign': 'center', 'marginBottom': '20px', 'color':'#5b3903', 'fontWeight' : '450'}),
         html.Label("Select the year construction of the apartment:",
                 style={'marginBottom': '20px'}),
