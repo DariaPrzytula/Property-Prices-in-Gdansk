@@ -7,18 +7,21 @@ from dash import dcc
 from dash import html
 from dash import Input,Output
 import dash_bootstrap_components as dbc
+import urllib.request
 import pickle
 import pandas as pd
 import plotly.express as px
 import geopandas as gpd
 
 # Import data
-
-df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\data_to_dashboard.xlsx")
+url = "https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/data_to_dashboard.xlsx?raw=true"
+df = pd.read_excel(url)
 
 # import model
 
-with open('model.pickle', 'rb') as file:
+url2 = 'https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/model.pickle?raw=true'
+
+with urllib.request.urlopen(url2) as file:
     model = pickle.load(file)
 
 

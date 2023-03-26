@@ -3,8 +3,8 @@ import numpy as np
 
 np.random.seed(10)
 #%%
-
-df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\raw_data.xlsx")
+url="https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/raw_data.xlsx?raw=true"
+df = pd.read_excel(url)
 
 #%%
 
@@ -131,6 +131,7 @@ df= df.dropna()
 
 df.replace("parter", "0", inplace=True)
 df["Floor"] = df["Floor"].astype("int64")
+df["Floor"] = df["Floor"] + 1
 
 
 #%%
@@ -158,13 +159,6 @@ df.to_excel('data_to_dashboard.xlsx')
 
 df = pd.get_dummies(df, drop_first=True)
 
-#%%
-
-#from sklearn.preprocessing import StandardScaler
-
-#scaler = StandardScaler()
-
-#df[['Price', 'Metric area', 'Year', 'Rooms', 'Floor']] = scaler.fit_transform(df[['Price', 'Metric area', 'Year', 'Rooms', 'Floor']])
 
 #%%
 
