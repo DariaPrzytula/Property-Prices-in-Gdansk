@@ -1,4 +1,4 @@
-## Project: Property Prices in Gdańsk, Poland
+# Project: Property Prices in Gdańsk, Poland
 This project is aimed at analyzing apartment prices in Gdansk, Poland. It contains several visualizations, including:
 
 * Scatter plots showing the relationship between apartment price and size in different districts of Gdansk.
@@ -7,11 +7,11 @@ This project is aimed at analyzing apartment prices in Gdansk, Poland. It contai
 
 Additionally, the project includes a machine learning model that allows for the prediction of apartment prices based on several factors, such as size, year of construction, number of rooms, floor, and district.
 
-# Data
+## Data
 Data were downloaded from www.trojmiasto.pl by Data Miner on 07.01.2023 r.
 The dataset includes information on apartment prices, sizes, districts, and other features.
 
-# Requirements
+## Requirements
 The following Python packages are required to run the code:
 
 -pandas
@@ -20,7 +20,7 @@ The following Python packages are required to run the code:
 -plotly
 -dash
 
-# Instructions
+## Instructions
 
 The repository contains files such as:
 * raw_data.xlsx - file with source data
