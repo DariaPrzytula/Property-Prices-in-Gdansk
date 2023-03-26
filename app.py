@@ -132,8 +132,8 @@ html.Div([
             max=200,
             step=0.1,
             marks={i: str(i) for i in range(0, 201, 20)},
-            tooltip={'placement': 'bottom', "always_visible": True}
-        ),
+            tooltip={'placement': 'bottom', "always_visible": True}),
+
 
     html.Hr(style={'border': '1px solid #6b3e00'}),
 
@@ -145,8 +145,7 @@ html.Div([
                 max=2030,
                 step=1,
                 marks={i: str(i) for i in range(1900, 2031, 10)},
-                tooltip={'placement': 'bottom', "always_visible": True}
-            ),
+                tooltip={'placement': 'bottom', "always_visible": True}),
 
     html.Hr(style={'border': '1px solid #6b3e00'}),
 
@@ -215,8 +214,7 @@ html.Div([
      Input('dropdown-1', 'value'),
      Input('dropdown-2', 'value'),
      Input('dropdown-3', 'value')
-     ]
-)
+     ])
 
 def display_parameters(val1, val2, val3, val4, val5):
     if val1 and val2 and val3 and val4 and val5 :
@@ -243,8 +241,7 @@ def display_parameters(val1, val2, val3, val4, val5):
      Input('dropdown-1', 'value'),
      Input('dropdown-2', 'value'),
      Input('dropdown-3', 'value')
-     ]
-)
+     ])
 
 def predict_value(val1, val2, val3, val4, val5):
     if val1 and val2 and val3 and val4 and val5:
