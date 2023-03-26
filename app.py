@@ -41,7 +41,7 @@ app.layout = html.Div([
 
     html.Div([
             html.P(
-                'The purpose of the project was to analyze apartment prices by collecting data on apartment sales offersfrom Trójmiasto.pl using the Data Miner plugin.' 
+                'The purpose of the project was to analyze apartment prices by collecting data on sales offers from Trójmiasto.pl using the Data Miner plugin.' 
                 'The collected data (3000 offers) included information such as price, location, area, number of rooms, year of construction, and floor level.'),
             html.P(
                 'The data was analyzed to identify the key features that impact apartment prices. '
