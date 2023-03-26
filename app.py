@@ -332,7 +332,6 @@ def predict_value(val1, val2, val3, val4, val5):
                      'District_VII Dwór','District_Wrzeszcz','District_Wyspa Sobieszewska','District_Zaspa',
                      'District_Śródmieście','District_Żabianka']
         )
-        print(df_sample)
 
         price = model.predict(df_sample)[0]
         price = int(round(price, 0))
