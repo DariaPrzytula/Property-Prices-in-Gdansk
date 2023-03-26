@@ -135,13 +135,6 @@ df = df.drop(columns=['Price per square meter'])
 #%%
 
 # Organize data in the "Floor" column - part2
-df.replace("parter", "0", inplace=True)
-df["Floor"] = df["Floor"].astype("int64")
-df["Floor"] = df["Floor"] + 1
-
-#%% 
-
-# Organize data in the "Floor" column
 
 df.replace("parter", "0", inplace=True)
 df["Floor"] = df["Floor"].astype("int64")
