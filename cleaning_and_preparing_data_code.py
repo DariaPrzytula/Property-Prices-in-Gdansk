@@ -13,6 +13,8 @@ df = pd.read_excel(url)
 # Organize data in the "Price" column
 
 df['Price'] = df['Price'].str.replace('zł', '')
+df['Price'] = df['Price'].replace({' ':'', ',':''}, regex=True).astype('int64')
+df = df.loc[(df['Price'] < 6000000)]
 
 #%% 
 
@@ -146,13 +148,6 @@ df["Floor"] = df["Floor"] + 1
 
 df['Year'].fillna(0, inplace=True)
 df['Year'] = df['Year'].astype('int64')
-
-#%% 
-
-# Organize data in the "Price" column
-
-df['Price'] = df['Price'].replace({' ':'', ',':''}, regex=True).astype('int64')
-df = df.loc[(df['Price'] < 6000000)]
 
 #%% 
 
