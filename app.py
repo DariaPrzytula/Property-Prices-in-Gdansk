@@ -349,6 +349,7 @@ def predict_value(val1, val2, val3, val4, val5):
     Output('graph-2', 'figure'),
     Output('graph-3', 'figure'),
     Input('year-built-slider', 'value'))
+
 def update_figures(selected_year):
     filtered_df = df[df.Year == selected_year]
 
