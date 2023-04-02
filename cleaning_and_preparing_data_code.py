@@ -132,7 +132,7 @@ df.replace("2022", np.nan, inplace=True)
 # Drop missing values, unused rows and columns
 
 df = df.dropna()
-df = df.drop(index=[1910,180, 1306, 267, 950,2456], axis=0)
+#df = df.drop(index=[1910,180, 1306, 267, 950,2456], axis=0)
 df = df.drop(columns=['Price per square meter'])
 
 #%%
@@ -179,10 +179,7 @@ y = X.pop('Price')
 
 # Normalization of input data
 
-from sklearn.preprocessing import StandardScaler
 
-scaler = StandardScaler()
-X = scaler.fit_transform(X)
 
 #%% 
 
@@ -204,6 +201,8 @@ model = LinearRegression()
 model.fit(X_train, y_train)
 
 model.fit(X_test, y_test)
+
+
 
 #%% 
 
