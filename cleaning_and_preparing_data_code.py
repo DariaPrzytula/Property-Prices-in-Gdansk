@@ -175,15 +175,6 @@ df.to_csv('data_to_model.csv')
 
 X = df.copy()
 y = X.pop('Price')
-#%% 
-
-# Normalization of input data
-
-from sklearn.preprocessing import StandardScaler
-
-scaler = StandardScaler()
-X= scaler.fit_transform(X)
-
 
 #%% 
 
@@ -193,42 +184,32 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-#%% 
 
-# Model - Linear Regression
-
-
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import GridSearchCV
+#%%
 
 
-model = LinearRegression()
 
-# Create a hyperparameter grid
+from sklearn.model_selection import KFold, GridSearchCV
+from sklearn.linear_model import Ridge
+from sklearn.metrics import r2_score, mean_squared_error
 
-param_grid = {
-    'fit_intercept': [True, False],
-    'normalize': [True, False],
-    'n_jobs': [-1, 1, 2]
-    
-    }
-    
-    
-grid_search = GridSearchCV(model, param_grid, cv=5)
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+params = {'alpha': [0.01, 0.1, 1, 5, 10, 25, 50, 55, 60, 65, 75, 100],
+          'fit_intercept': [True, False],
+          'normalize': [True, False],
+          'solver': ['svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga'],
+          'max_iter': [None, 10, 100, 1000],
+          'tol': [1e-2, 1e-3, 1e-4]}
+
+model = Ridge()
+
+grid_search = GridSearchCV(model, params, cv=kf, scoring='r2')
 grid_search.fit(X_train, y_train)
 
 model = grid_search.best_estimator_
 
-
-
-
-
-
-
-#%% 
-
-
-
+# model = Ridge(alpha=1, normalize=False, solver='cholesky', tol=0.01)
 
 #%%
 
@@ -240,3 +221,10 @@ with open('model.pickle', 'wb') as file:
     pickle.dump(model, file)
 
  
+#%% 
+
+
+y_pred = model.predict(X_test)
+
+r2 = r2_score(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)

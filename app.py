@@ -13,13 +13,16 @@ import plotly.express as px
 # Import data
 
 url = "https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/data_to_dashboard.xlsx?raw=true"
-df = pd.read_excel(url)
+df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\data_to_dashboard.xlsx")
 
 # Import model
 
 url2 = 'https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/model.pickle?raw=true'
 
-with urllib.request.urlopen(url2) as file:
+#with urllib.request.urlopen(url2) as file:
+#    model = pickle.load(file)
+
+with open('model.pickle', 'rb') as file:
     model = pickle.load(file)
 
 
