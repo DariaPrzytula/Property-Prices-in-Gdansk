@@ -129,9 +129,10 @@ df.replace("2022", np.nan, inplace=True)
 
 #%% 
 
-# Drop missing values and unused columns
+# Drop missing values, unused rows and columns
 
-df= df.dropna()
+df = df.dropna()
+df = df.drop(index=[1910,180, 1306, 267, 950,2456], axis=0)
 df = df.drop(columns=['Price per square meter'])
 
 #%%
@@ -194,48 +195,22 @@ X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 # Model - Linear Regression
 
-from sklearn.model_selection import KFold, GridSearchCV
-from sklearn.linear_model import Ridge
-from sklearn.metrics import r2_score, mean_squared_error
 
-kf = KFold(n_splits=7, shuffle=True, random_state=42)
+from sklearn.linear_model import LinearRegression
 
-params = {'alpha': [0.01, 0.1, 1, 5, 10, 25, 50, 55, 60, 65, 75, 100]}
+model = LinearRegression()
 
-model = Ridge()
+model.fit(X_train, y_train)
 
-grid_search = GridSearchCV(model, params, cv=kf, scoring='r2')
+model.fit(X_test, y_test)
 
-grid_search.fit(X_train, y_train)
 
-best_model = grid_search.best_estimator_
-
-y_pred = best_model.predict(X_test)
-
-r2 = r2_score(y_test, y_pred)
-
-mse = mean_squared_error(y_test, y_pred)
 
 #%% 
 
-model_score1= best_model.score(X_train, y_train)
-model_score2= best_model.score(X_test, y_test)
 
 
-slope_coefficient = best_model.coef_
 
-intercept_coefficient = best_model.intercept_
-
-#%%
-import matplotlib.pyplot as plt
-
-plt.scatter(y_test, y_test, c='blue', label='Observed prices')
-plt.scatter(y_test, y_pred, c='red', label='Predicted prices')
-plt.xlabel("Price")
-plt.ylabel("Price")
-plt.title("Comparison between observed and predicted prices")
-plt.legend()
-plt.show()
 #%%
 
 # Save model
