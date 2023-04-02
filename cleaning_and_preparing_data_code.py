@@ -183,6 +183,7 @@ from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
 X = scaler.fit_transform(X)
+
 #%% 
 
 # Split a dataset into a training set and a test set
@@ -203,8 +204,6 @@ model = LinearRegression()
 model.fit(X_train, y_train)
 
 model.fit(X_test, y_test)
-
-
 
 #%% 
 
