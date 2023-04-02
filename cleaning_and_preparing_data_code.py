@@ -132,7 +132,7 @@ df.replace("2022", np.nan, inplace=True)
 # Drop missing values, unused rows and columns
 
 df = df.dropna()
-#df = df.drop(index=[1910,180, 1306, 267, 950,2456], axis=0)
+df = df.drop(index=[1910,180, 1306, 267, 950,2456], axis=0)
 df = df.drop(columns=['Price per square meter'])
 
 #%%
@@ -179,6 +179,10 @@ y = X.pop('Price')
 
 # Normalization of input data
 
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X= scaler.fit_transform(X)
 
 
 #%% 
@@ -195,12 +199,29 @@ X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GridSearchCV
+
 
 model = LinearRegression()
 
-model.fit(X_train, y_train)
+# Create a hyperparameter grid
 
-model.fit(X_test, y_test)
+param_grid = {
+    'fit_intercept': [True, False],
+    'normalize': [True, False],
+    'n_jobs': [-1, 1, 2]
+    
+    }
+    
+    
+grid_search = GridSearchCV(model, param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+
+model = grid_search.best_estimator_
+
+
+
+
 
 
 
