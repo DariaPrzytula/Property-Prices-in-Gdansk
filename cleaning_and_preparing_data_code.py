@@ -161,7 +161,8 @@ df.to_excel('data_to_dashboard.xlsx')
 
 df = pd.get_dummies(df, drop_first=True)
 
-#%% 
+
+#%%
 
 # Save data to model 
 
@@ -173,7 +174,14 @@ df.to_csv('data_to_model.csv')
 
 X = df.copy()
 y = X.pop('Price')
+#%% 
 
+# Normalization of input data
+
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
 #%% 
 
 # Split a dataset into a training set and a test set
@@ -184,17 +192,51 @@ X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 #%% 
 
-# Model 
+# Model - Linear Regression
 
-from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import KFold, GridSearchCV
+from sklearn.linear_model import Ridge
+from sklearn.metrics import r2_score, mean_squared_error
 
-model = LinearRegression()
+kf = KFold(n_splits=7, shuffle=True, random_state=42)
 
-model.fit(X_test, y_test)
+params = {'alpha': [0.01, 0.1, 1, 5, 10, 25, 50, 55, 60, 65, 75, 100]}
 
-model_score = model.score(X_test, y_test)
+model = Ridge()
+
+grid_search = GridSearchCV(model, params, cv=kf, scoring='r2')
+
+grid_search.fit(X_train, y_train)
+
+best_model = grid_search.best_estimator_
+
+y_pred = best_model.predict(X_test)
+
+r2 = r2_score(y_test, y_pred)
+
+mse = mean_squared_error(y_test, y_pred)
 
 #%% 
+
+model_score1= best_model.score(X_train, y_train)
+model_score2= best_model.score(X_test, y_test)
+
+
+slope_coefficient = best_model.coef_
+
+intercept_coefficient = best_model.intercept_
+
+#%%
+import matplotlib.pyplot as plt
+
+plt.scatter(y_test, y_test, c='blue', label='Observed prices')
+plt.scatter(y_test, y_pred, c='red', label='Predicted prices')
+plt.xlabel("Price")
+plt.ylabel("Price")
+plt.title("Comparison between observed and predicted prices")
+plt.legend()
+plt.show()
+#%%
 
 # Save model
 
