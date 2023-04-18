@@ -37,8 +37,9 @@ app.layout = html.Div([
     html.Div([
 
         html.H1('Property prices in Gdańsk',
-            style={'textAlign': 'center',
-                   'color':'#5b3903', 'fontWeight' : 'bold'}),
+                style=({"textDecoration": "underline",'background-color': 'rgba(245,245,220,0.85)', 'color':'#5b3903', 'fontWeight' : 'bold',
+                        'width': '50%', 'margin': 'auto', 'marginBottom': '10px', 'padding':'10px', 'borderRadius': '10px',
+                        'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.45)', 'textAlign': 'center'})),
 
     html.Br(),
 
@@ -46,13 +47,15 @@ app.layout = html.Div([
             html.P(
                 'The purpose of the project was to analyze apartment prices by collecting data on sales offers from Trójmiasto.pl using the Data Miner plugin.' 
                 'The collected data (3000 offers) included information such as price, location, area, number of rooms, year of construction, and floor level.'),
+
             html.P(
                 'The data was analyzed to identify the key features that impact apartment prices. '
                 'This analysis led to the development of a predictive model that could estimate the price of an apartment based on specific parameters.'),
             html.P(
                 'Overall, this project provided valuable insights into the real estate market and assisted in determining the market value of apartments.')
-        ], style={'background-color': 'rgba(245,245,220,0.75)', 'color':'#5b3903', 'fontWeight' : '450',
-                  'width': '80%', 'margin': 'auto', 'marginBottom': '20px'}),
+        ], style={'background-color': 'rgba(245,245,220,0.6)', 'color':'#5b3903', 'fontWeight' : '450',
+                  'width': '80%', 'margin': 'auto', 'marginBottom': '20px', 'padding':'20px', 'borderRadius': '10px',
+            'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.45)', 'lineHeight': '1.5', 'textAlign': 'justify'}),
 
     html.Br(),
 
@@ -70,10 +73,11 @@ app.layout = html.Div([
             value=2020,
             marks={str(rok): str(rok) for rok in range(1900, 2031, 10)},
             step=1,
-            tooltip={'placement': 'bottom', "always_visible": True}
+            tooltip={'placement': 'bottom', "always_visible": True},
                     )
-    ], style={'background-color': 'rgba(245,245,220,0.75)', 'color':'#5b3903', 'fontWeight' : '450',
-              "width": "80%", "margin": "auto"}),
+    ], style={'background-color': 'rgba(245,245,220,0.6)', 'color':'#5b3903', 'fontWeight' : '450',
+              "width": "80%", "margin": "auto", 'borderRadius': '10px',
+            'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.45)', 'padding':'20px'}),
 
     ], style={'background-image': 'url(https://images.unsplash.com/photo-1623130622557-8fab31968b8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2RhbnNrfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60)',
           'background-size': 'cover',
@@ -119,9 +123,13 @@ html.Div([
 
     html.Div([
         html.H2('Calculate the worth of your apartment')
-    ],  style={'marginBottom': '10px', 'padding':'10px','textAlign': 'center', 'color':'#5b3903', 'fontWeight' : 'bold'}),
+    ], style={'background-color': 'rgba(245,245,220,0.75)', 'color':'#5b3903', 'fontWeight' : '450',
+                  'width': '50%', 'margin': 'auto', 'marginBottom': '10px', 'padding':'10px', 'borderRadius': '10px',
+            'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.45)', 'textAlign': 'center'} ),
     html.P('Select parameters of your apartment to estimate its price',
-           style={'marginBottom': '2px', 'textAlign': 'center', 'color':'#5b3903', 'fontWeight' : '400'}),
+           style={'background-color': 'rgba(245,245,220,0.75)', 'color': '#5b3903', 'fontWeight': '450',
+                  'width': '35%', 'margin': 'auto', 'marginBottom': '10px', 'padding': '10px', 'borderRadius': '10px',
+                  'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.45)', 'textAlign': 'center'}),
 
     html.Hr(style={'border': '1px solid #6b3e00'}),
 
