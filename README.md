@@ -28,6 +28,7 @@ The repository contains files such as:
 * data_to_model.csv - file with data prepared for the model
 * cleaning_and_preparing_code.py - a file containing code for cleaning and preparing data
 * app.py - file containing the dashboard code
+* Prezentacja Projekt.pptx - file with presentation in Power Point [pl]
 
 To open the Dash application, you need to run the **app.py** code for example in **PyCharm**. All necessery files are added in code as links from this repository.  
 After running the app.py code a local server will be launched. This server will host your Dash application and make it accessible via a URL. You can then open your web browser and navigate to this URL to access your Dash application.\
