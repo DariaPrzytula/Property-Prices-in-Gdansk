@@ -13,17 +13,17 @@ import plotly.express as px
 # Import data
 
 url = "https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/data_to_dashboard.xlsx?raw=true"
-df = pd.read_excel("C:\\Users\\kurzy\\Desktop\\Studia podyplomowe\\Property-Prices-in-Gdansk\\data_to_dashboard.xlsx")
+df = pd.read_excel(url)
 
 # Import model
 
 url2 = 'https://github.com/DariaPrzytula/Property-Prices-in-Gdansk/blob/main/model.pickle?raw=true'
 
-#with urllib.request.urlopen(url2) as file:
-#    model = pickle.load(file)
-
-with open('model.pickle', 'rb') as file:
+with urllib.request.urlopen(url2) as file:
     model = pickle.load(file)
+
+# with open('model.pickle', 'rb') as file:
+#    model = pickle.load(file)
 
 
 
@@ -370,7 +370,7 @@ def update_figures(selected_year):
     fig1.update_xaxes(showgrid=True, gridcolor='white', zeroline=False)
     fig1.update_yaxes(showgrid=True, gridcolor='white', zeroline=False)
 
-    fig2 = px.histogram(filtered_df, x="Price", nbins=20, range_x=[200000, 5000000], color_discrete_sequence=['brown'])
+    fig2 = px.histogram(filtered_df, x="Price", nbins=10, range_x=[200000, 5000000], color_discrete_sequence=['brown'])
     fig2.update_layout(xaxis_title="Price",
                        yaxis_title="Number of apartments",
                        font=dict(color='#5b3903'),
