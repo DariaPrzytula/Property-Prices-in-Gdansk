@@ -53,9 +53,9 @@ app.layout = html.Div([
                 'This analysis led to the development of a predictive model that could estimate the price of an apartment based on specific parameters.'),
             html.P(
                 'Overall, this project provided valuable insights into the real estate market and assisted in determining the market value of apartments.')
-        ], style={'background-color': 'rgba(245,245,220,0.6)', 'color':'#5b3903', 'fontWeight' : '450',
+        ], style={'background-color': 'rgba(245,245,220,0.65)', 'color':'#5b3903', 'fontWeight' : '450',
                   'width': '80%', 'margin': 'auto', 'marginBottom': '20px', 'padding':'20px', 'borderRadius': '10px',
-            'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.45)', 'lineHeight': '1.5', 'textAlign': 'justify'}),
+            'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.65)', 'lineHeight': '1.5', 'textAlign': 'justify'}),
 
     html.Br(),
 
@@ -75,9 +75,9 @@ app.layout = html.Div([
             step=1,
             tooltip={'placement': 'bottom', "always_visible": True},
                     )
-    ], style={'background-color': 'rgba(245,245,220,0.6)', 'color':'#5b3903', 'fontWeight' : '450',
+    ], style={'background-color': 'rgba(245,245,220,0.65)', 'color':'#5b3903', 'fontWeight' : '450',
               "width": "80%", "margin": "auto", 'borderRadius': '10px',
-            'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.45)', 'padding':'20px'}),
+            'boxShadow': '3px 3px 10px 2px rgba(0,0,0,0.65)', 'padding':'20px'}),
 
     ], style={'background-image': 'url(https://images.unsplash.com/photo-1623130622557-8fab31968b8f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2RhbnNrfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60)',
           'background-size': 'cover',

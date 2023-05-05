@@ -21,7 +21,7 @@ df = df.loc[(df['Price'] < 6000000)]
 # Organize data in the "District" column
 
 df['District'] = df['District'].str.split(',').str[0]
-
+#%%
 df.replace("Gdańsk Orunia Górna", "Orunia", inplace=True)
 df.replace("Gdańsk Morena ", "Piecki-Migowo", inplace=True)
 df.replace("Gdańsk", "Śródmieście", inplace=True)
